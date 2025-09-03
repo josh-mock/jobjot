@@ -30,6 +30,7 @@ const applicationSchema = new mongoose.Schema({
     ref: "Job",
     required: true,
   },
+  userId: { type: String, required: true },
 });
 
 export const Application =

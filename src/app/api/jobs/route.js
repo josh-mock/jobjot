@@ -6,13 +6,25 @@ import { Archive } from "@/components/forms/models/archive.model";
 import { Application } from "@/components/forms/models/application.model";
 import { Interview } from "@/components/forms/models/interview.model";
 import { Offer } from "@/components/forms/models/offer.model";
+import { auth0 } from "@/lib/auth/auth0";
 
 // CREATE NEW JOB
 
 export async function POST(request) {
   try {
+    const session = await auth0.getSession();
+    if (!session || !session.user) {
+      return NextResponse.json(
+        { success: false, error: "Unauthorized" },
+        { status: 401 }
+      );
+    }
+
     await connectDB();
     const data = await request.json();
+
+    data.userId = session.user.sub;
+
     try {
       await jobSchema.validate(data, { abortEarly: false });
     } catch (validationError) {
@@ -25,6 +37,7 @@ export async function POST(request) {
         { status: 400 }
       );
     }
+
     const job = new Job(data);
     await job.save();
     return NextResponse.json({ jobId: job._id }, { status: 201 });
@@ -39,11 +52,18 @@ export async function POST(request) {
 
 // READ ALL JOBS
 
-export async function GET() {
+export async function GET(request) {
   try {
+    const session = await auth0.getSession();
+    if (!session || !session.user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+    const userId = session.user.sub;
+
     await connectDB();
 
     const jobs = await Job.aggregate([
+      { $match: { userId } }, // <-- Only jobs for this user
       {
         $lookup: {
           from: "applications",
@@ -81,14 +101,8 @@ export async function GET() {
           stage: {
             $switch: {
               branches: [
-                {
-                  case: { $gt: [{ $size: "$archive" }, 0] },
-                  then: "archive",
-                },
-                {
-                  case: { $gt: [{ $size: "$offer" }, 0] },
-                  then: "offer",
-                },
+                { case: { $gt: [{ $size: "$archive" }, 0] }, then: "archive" },
+                { case: { $gt: [{ $size: "$offer" }, 0] }, then: "offer" },
                 {
                   case: { $gt: [{ $size: "$interviews" }, 0] },
                   then: "interview",
@@ -124,26 +138,27 @@ export async function GET() {
 }
 
 // DELETE ALL JOBS
-export async function DELETE() {
+export async function DELETE(request) {
   try {
+    const session = await auth0.getSession();
+    if (!session || !session.user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+    const userId = session.user.sub;
+
     await connectDB();
-    const result = await Promise.all([
-      Application.collection.drop(),
-      Interview.collection.drop(),
-      Offer.collection.drop(),
-      Archive.collection.drop(),
-      Job.collection.drop(),
+
+    // Remove only this user's documents
+    await Promise.all([
+      Application.deleteMany({ userId }),
+      Interview.deleteMany({ userId }),
+      Offer.deleteMany({ userId }),
+      Archive.deleteMany({ userId }),
+      Job.deleteMany({ userId }),
     ]);
 
-    if (!result) {
-      return NextResponse.json(
-        { error: "There was an error" },
-        { status: 404 }
-      );
-    }
-
     return NextResponse.json(
-      { message: "Database reset successfully!" },
+      { message: "Your records have been deleted." },
       { status: 200 }
     );
   } catch (error) {

@@ -33,6 +33,7 @@ const InterviewSchema = {
     ref: "Job",
     required: true,
   },
+  userId: { type: String, required: true },
 };
 
 export const Interview =

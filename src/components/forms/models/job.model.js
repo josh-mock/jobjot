@@ -11,6 +11,7 @@ const jobSchema = new mongoose.Schema({
   roleUnsure: { type: String, default: "" },
   matchingSkills: { type: String, default: "" },
   matchingExperiences: { type: String, default: "" },
+  userId: { type: String, required: true },
 });
 
 export const Job = mongoose.models.Job || mongoose.model("Job", jobSchema);
