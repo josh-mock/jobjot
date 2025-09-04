@@ -1,5 +1,5 @@
 "use client";
-import { Button, Typography, Grid } from "@mui/material";
+import { Button, Typography, Grid, Box } from "@mui/material";
 import { useFieldArray, useWatch } from "react-hook-form";
 import {
   SelectElement,
@@ -77,44 +77,52 @@ export function InterviewFormFields({ control }) {
         {interviewerFields.map((item, index) => (
           <Grid container spacing={1} key={item.id} alignItems="center" mb={2}>
             <Grid size={11 / 3}>
-              <TextFieldElement
-                name={`interviewers.${index}.interviewerName`}
-                label="Name"
-                control={control}
-                fullWidth
-                autoComplete="off"
-                required
-              />
+              <Box height="80px">
+                <TextFieldElement
+                  name={`interviewers.${index}.interviewerName`}
+                  label="Name"
+                  control={control}
+                  fullWidth
+                  autoComplete="off"
+                  required
+                />
+              </Box>
             </Grid>
 
             <Grid size={11 / 3}>
-              <TextFieldElement
-                name={`interviewers.${index}.interviewerPosition`}
-                label="Position"
-                control={control}
-                fullWidth
-                autoComplete="off"
-              />
+              <Box height="80px">
+                <TextFieldElement
+                  name={`interviewers.${index}.interviewerPosition`}
+                  label="Position"
+                  control={control}
+                  fullWidth
+                  autoComplete="off"
+                />
+              </Box>
             </Grid>
 
             <Grid size={11 / 3}>
-              <TextFieldElement
-                name={`interviewers.${index}.linkedInUrl`}
-                label="LinkedIn"
-                control={control}
-                fullWidth
-                autoComplete="off"
-              />
+              <Box height="80px">
+                <TextFieldElement
+                  name={`interviewers.${index}.linkedInUrl`}
+                  label="LinkedIn"
+                  control={control}
+                  fullWidth
+                  autoComplete="off"
+                />
+              </Box>
             </Grid>
 
             <Grid size={1}>
-              <Button
-                variant="outlined"
-                color="error"
-                onClick={() => removeInterviewer(index)}
-              >
-                Delete
-              </Button>
+              <Box height="80px">
+                <Button
+                  variant="outlined"
+                  color="error"
+                  onClick={() => removeInterviewer(index)}
+                >
+                  Delete
+                </Button>
+              </Box>
             </Grid>
           </Grid>
         ))}
@@ -139,45 +147,56 @@ export function InterviewFormFields({ control }) {
         {interviewTaskFields.map((item, index) => (
           <Grid container spacing={1} key={item.id} alignItems="center" mb={2}>
             <Grid size={11 / 3}>
-              <TextFieldElement
-                name={`interviewTasks.${index}.taskName`}
-                label="Task"
-                control={control}
-                fullWidth
-                autoComplete="off"
-                required
-              />
+              <Box height="80px">
+                <TextFieldElement
+                  name={`interviewTasks.${index}.taskName`}
+                  label="Task"
+                  control={control}
+                  fullWidth
+                  autoComplete="off"
+                  required
+                />
+              </Box>
             </Grid>
+
             <Grid size={11 / 3}>
-              <SelectElement
-                name={`interviewTasks.${index}.taskStatus`}
-                label="Status"
-                control={control}
-                options={[
-                  { id: "Not Started", label: "Not Started" },
-                  { id: "In Progress", label: "In Progress" },
-                  { id: "Done", label: "Done" },
-                ]}
-                fullWidth
-              />
+              <Box height="80px">
+                <SelectElement
+                  name={`interviewTasks.${index}.taskStatus`}
+                  label="Status"
+                  control={control}
+                  options={[
+                    { id: "Not Started", label: "Not Started" },
+                    { id: "In Progress", label: "In Progress" },
+                    { id: "Done", label: "Done" },
+                  ]}
+                  fullWidth
+                />
+              </Box>
             </Grid>
+
             <Grid size={11 / 3}>
-              <TextFieldElement
-                name={`interviewTasks.${index}.url`}
-                label="Document URL"
-                control={control}
-                fullWidth
-                autoComplete="off"
-              />
+              <Box height="80px">
+                <TextFieldElement
+                  name={`interviewTasks.${index}.url`}
+                  label="Document URL"
+                  control={control}
+                  fullWidth
+                  autoComplete="off"
+                />
+              </Box>
             </Grid>
+
             <Grid size={1}>
-              <Button
-                variant="outlined"
-                color="error"
-                onClick={() => removeTask(index)}
-              >
-                Delete
-              </Button>
+              <Box height="80px">
+                <Button
+                  variant="outlined"
+                  color="error"
+                  onClick={() => removeTask(index)}
+                >
+                  Delete
+                </Button>
+              </Box>
             </Grid>
           </Grid>
         ))}
