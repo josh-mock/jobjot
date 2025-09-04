@@ -1,9 +1,8 @@
 "use client";
-import React from "react";
-import { Grid, Paper, Typography } from "@mui/material";
 import KanbanCard from "@/app/(home)/Kanban/KanbanCard";
-import { useJobs } from "@/hooks/useJobs.hook";
 import Loading from "@/components/ui/Loading";
+import { useJobs } from "@/hooks/useJobs.hook";
+import { Grid, Paper, Stack, Typography } from "@mui/material";
 
 const stages = [
   { key: "opportunity", label: "Opportunities" },
@@ -39,11 +38,13 @@ export default function KanbanBoard() {
               </Typography>
 
               {jobsInStage.length === 0 ? (
-                <Typography textAlign={"center"}>No jobs</Typography>
+                <Typography textAlign="center">No jobs</Typography>
               ) : (
-                jobsInStage.map((job, index) => (
-                  <KanbanCard key={job.id || index} job={job} />
-                ))
+                <Stack spacing={2}>
+                  {jobsInStage.map((job, index) => (
+                    <KanbanCard key={job.id || index} job={job} />
+                  ))}
+                </Stack>
               )}
             </Paper>
           </Grid>
