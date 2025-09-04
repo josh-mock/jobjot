@@ -41,6 +41,7 @@ JobJot is a web application designed to help users track and reflect on their jo
 - Material UI
 - Mongoose (for data models)
 - Yup (for validation)
+- 0Auth
 
 ## Contributing
 

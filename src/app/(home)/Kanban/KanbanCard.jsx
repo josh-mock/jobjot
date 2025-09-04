@@ -20,12 +20,9 @@ export default function KanbanCard({ job }) {
       >
         {job.jobTitle}
       </Typography>
-      <Stack direction={"row"} justifyContent={"center"} gap={2}>
+      <Stack direction={"column"} justifyContent={"center"}>
         <Typography variant="body1" textAlign={"center"}>
-          {job.companyName}
-        </Typography>
-        <Typography variant="body1" textAlign={"center"}>
-          {job.salary}
+          {job.company}
         </Typography>
         <Typography variant="body1" textAlign={"center"}>
           {job.location}
