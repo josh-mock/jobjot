@@ -1,5 +1,5 @@
 "use client";
-import { Button, Typography, Grid } from "@mui/material";
+import { Button, Typography, Grid, Box } from "@mui/material";
 import { useFieldArray } from "react-hook-form";
 import {
   SelectElement,
@@ -69,47 +69,55 @@ export function ApplicationFormFields({ control }) {
         {fields.map((item, index) => (
           <Grid container key={item.id} spacing={1} alignItems="center" mb={2}>
             <Grid size={11 / 3}>
-              <TextFieldElement
-                name={`applicationTasks.${index}.taskName`}
-                label="Task Name"
-                control={control}
-                required
-                fullWidth
-                autoComplete="off"
-              />
+              <Box height={"80px"}>
+                <TextFieldElement
+                  name={`applicationTasks.${index}.taskName`}
+                  label="Task Name"
+                  control={control}
+                  required
+                  fullWidth
+                  autoComplete="off"
+                />
+              </Box>
             </Grid>
 
             <Grid size={11 / 3}>
-              <SelectElement
-                name={`applicationTasks.${index}.taskStatus`}
-                label="Status"
-                control={control}
-                options={[
-                  { id: "Not Started", label: "Not Started" },
-                  { id: "In Progress", label: "In Progress" },
-                  { id: "Done", label: "Done" },
-                ]}
-                fullWidth
-              />
+              <Box height={"80px"}>
+                <SelectElement
+                  name={`applicationTasks.${index}.taskStatus`}
+                  label="Status"
+                  control={control}
+                  options={[
+                    { id: "Not Started", label: "Not Started" },
+                    { id: "In Progress", label: "In Progress" },
+                    { id: "Done", label: "Done" },
+                  ]}
+                  fullWidth
+                />
+              </Box>
             </Grid>
 
             <Grid size={11 / 3}>
-              <TextFieldElement
-                name={`applicationTasks.${index}.documentUrl`}
-                label="Document URL"
-                control={control}
-                fullWidth
-              />
+              <Box height={"80px"}>
+                <TextFieldElement
+                  name={`applicationTasks.${index}.documentUrl`}
+                  label="Document URL"
+                  control={control}
+                  fullWidth
+                />
+              </Box>
             </Grid>
 
-            <Grid size={1} display="flex" alignItems="center">
-              <Button
-                variant="outlined"
-                color="error"
-                onClick={() => remove(index)}
-              >
-                DELETE
-              </Button>
+            <Grid size={1}>
+              <Box height={"80px"}>
+                <Button
+                  variant="outlined"
+                  color="error"
+                  onClick={() => remove(index)}
+                >
+                  DELETE
+                </Button>
+              </Box>
             </Grid>
           </Grid>
         ))}

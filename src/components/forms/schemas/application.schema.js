@@ -11,7 +11,7 @@ export const applicationSchema = yup.object({
         .string()
         .required("Required")
         .oneOf(["Not Started", "In Progress", "Done"]),
-      documentUrl: yup.string().url().nullable(),
+      documentUrl: yup.string().url("Must be a valid URL").nullable(),
     })
   ),
 });
